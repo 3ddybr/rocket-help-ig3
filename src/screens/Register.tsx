@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Alert } from 'react-native';
 import { VStack } from 'native-base';
-// import { useNavigation } from '@react-navigation/native';
-// import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 import { Header } from '../components/Header';
 import { Input } from '../components/Input';
@@ -13,32 +13,32 @@ export function Register() {
   const [patrimony, setPatrimony] = useState('');
   const [description, setDescription] = useState('');
 
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
   function handleNewOrderRegister() {
-    // if (!patrimony || !description) {
-    //   return Alert.alert('Registrar', 'Preencha todos os campos.');
-    // }
+    if (!patrimony || !description) {
+      return Alert.alert('Registrar', 'Preencha todos os campos.');
+    }
 
-    // setIsLoading(true);
+    setIsLoading(true);
 
-  //   firestore()
-  //     .collection('orders')
-  //     .add({
-  //       patrimony,
-  //       description,
-  //       status: 'open',
-  //       created_at: firestore.FieldValue.serverTimestamp()
-  //     })
-  //     .then(() => {
-  //       Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
-  //       navigation.goBack();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       setIsLoading(false);
-  //       return Alert.alert('Solicitação', 'Não foi possível registrar o pedido');
-  //     });
+    firestore()
+      .collection('orders')
+      .add({
+        patrimony,
+        description,
+        status: 'open',
+        created_at: firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        Alert.alert("Solicitação", "Solicitação registrada com sucesso.");
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+        return Alert.alert('Solicitação', 'Não foi possível registrar o pedido');
+      });
   }
 
   return (

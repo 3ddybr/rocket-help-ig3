@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { VStack, Text, HStack, useTheme, ScrollView, Box } from 'native-base';
 import { useNavigation, useRoute } from '@react-navigation/native';
-// import firestore from '@react-native-firebase/firestore';
-// import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
+import firestore from '@react-native-firebase/firestore';
+import { OrderFirestoreDTO } from '../DTOs/OrderFirestoreDTO';
 import { CircleWavyCheck, Hourglass, DesktopTower, ClipboardText } from 'phosphor-react-native';
 
-// import { dateFormat } from '../utils/firestoreDateFormat';
+import { dateFormat } from '../utils/firestoreDateFormat';
 
 import { Input } from '../components/Input';
 import { Button } from '../components/Button';
 import { Header } from '../components/Header';
 import { OrderProps } from '../components/Order';
 import { Loading } from '../components/Loading';
-// import { CardDetails } from '../components/CardDetails';
+import { CardDetails } from '../components/CardDetails';
 
 type RouteParams = {
   orderId: string;
@@ -36,56 +36,56 @@ export function Details() {
 
   const { orderId } = route.params as RouteParams;
 
-  // function handleOrderClose() {
-  //   if (!solution) {
-  //     return Alert.alert('Solicitação', 'Informa a solução para encerrar a solicitação');
-  //   }
+  function handleOrderClose() {
+    if (!solution) {
+      return Alert.alert('Solicitação', 'Informa a solução para encerrar a solicitação');
+    }
 
-  //   firestore()
-  //     .collection<OrderFirestoreDTO>('orders')
-  //     .doc(orderId)
-  //     .update({
-  //       status: 'closed',
-  //       solution,
-  //       closed_at: firestore.FieldValue.serverTimestamp()
-  //     })
-  //     .then(() => {
-  //       Alert.alert('Solicitação', 'Solicitação encerrada.');
-  //       navigation.goBack();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       Alert.alert('Solicitação', 'Não foi possível encerrar a solicitação');
-  //     });
-  // }
+    firestore()
+      .collection<OrderFirestoreDTO>('orders')
+      .doc(orderId)
+      .update({
+        status: 'closed',
+        solution,
+        closed_at: firestore.FieldValue.serverTimestamp()
+      })
+      .then(() => {
+        Alert.alert('Solicitação', 'Solicitação encerrada.');
+        navigation.goBack();
+      })
+      .catch((error) => {
+        console.log(error);
+        Alert.alert('Solicitação', 'Não foi possível encerrar a solicitação');
+      });
+  }
 
-  // useEffect(() => {
-  //   firestore()
-  //     .collection<OrderFirestoreDTO>('orders')
-  //     .doc(orderId)
-  //     .get()
-  //     .then((doc) => {
-  //       const { patrimony, description, status, created_at, closed_at, solution } = doc.data();
+  useEffect(() => {
+    firestore()
+      .collection<OrderFirestoreDTO>('orders')
+      .doc(orderId)
+      .get()
+      .then((doc) => {
+        const { patrimony, description, status, created_at, closed_at, solution } = doc.data();
 
-  //       const closed = closed_at ? dateFormat(closed_at) : null;
+        const closed = closed_at ? dateFormat(closed_at) : null;
 
-  //       setOrder({
-  //         id: doc.id,
-  //         patrimony,
-  //         description,
-  //         status,
-  //         solution,
-  //         when: dateFormat(created_at),
-  //         closed
-  //       });
+        setOrder({
+          id: doc.id,
+          patrimony,
+          description,
+          status,
+          solution,
+          when: dateFormat(created_at),
+          closed
+        });
 
-  //       setIsLoading(false);
-  //     });
-  // }, []);
+        setIsLoading(false);
+      });
+  }, []);
 
-  // if (isLoading) {
-  //   return <Loading />
-  // }
+  if (isLoading) {
+    return <Loading />
+  }
 
   return (
     <VStack flex={1} bg="gray.700">
@@ -110,7 +110,7 @@ export function Details() {
         </Text>
       </HStack>
 
-      {/* <ScrollView mx={5} showsVerticalScrollIndicator={false}>
+      <ScrollView mx={5} showsVerticalScrollIndicator={false}>
         <CardDetails
           title="equipamento"
           description={`Patrimônio ${order.patrimony}`}
@@ -141,14 +141,14 @@ export function Details() {
             />
           }
         </CardDetails>
-      </ScrollView> */}
+      </ScrollView>
 
       {
         order.status === 'open' &&
         <Button
           title="Encerrar solicitação"
           m={5}
-          // onPress={handleOrderClose}
+          onPress={handleOrderClose}
         />
       }
     </VStack>
