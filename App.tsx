@@ -1,11 +1,9 @@
 import React from 'react';
 import {useFonts, Roboto_400Regular, Roboto_700Bold} from '@expo-google-fonts/roboto'
 import { NativeBaseProvider, StatusBar } from 'native-base';
-import { Home } from './src/screens/Home';
-import {Loading} from './src/components/Loading';
 
-// import { StyleSheet, Text, View } from 'react-native';
-// import { StatusBar } from 'expo-status-bar';
+import { Routes } from './src/routes';
+import {Loading} from './src/components/Loading';
 
 import { THEME } from './src/styles/theme';
 
@@ -19,16 +17,7 @@ export default function App() {
         backgroundColor="transparent"
         translucent
       />
-      {fontsLoaded ? <Home/> : <Loading/>}
+      {fontsLoaded ? <Routes/> : <Loading/>}
     </NativeBaseProvider>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
