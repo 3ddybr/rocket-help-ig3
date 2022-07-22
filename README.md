@@ -49,7 +49,7 @@ O projeto consiste em uma plataforma de fórum para os alunos enviarem seus prob
 <br>
 
 <p align="center">
-  <img src="src/assets/capa.png" alt="Página inicial">
+  <img src="src/assets/capa.png" alt="Página inicial" width="600px">
 </p>
 
 ### 🛠 Tecnologias:
